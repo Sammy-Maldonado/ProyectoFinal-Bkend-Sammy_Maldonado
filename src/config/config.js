@@ -37,5 +37,8 @@ export default {
   mailer: {
     USER: process.env.MAILER_USER,
     PASSWORD: process.env.MAILER_PASSWORD
+  },
+  react: {
+    BASEURL: process.env.VITE_BAKCEND_URL
   }
 }
