@@ -30,7 +30,7 @@
         "MAILER_USER": "sammyalejandro.m.p@gmail.com",
         "MAILER_PASSWORD": "kqsvrzyymcwcxnus",
         "LOGGER_ENV": "DEVELOPMENT",
-        "VITE_BAKCEND_URL": "https://programa-t.netlify.app/"
+        "VITE_FRONT_URL": "https://programa-t.netlify.app/"
       },
       "outputCapture": "std"
     }
