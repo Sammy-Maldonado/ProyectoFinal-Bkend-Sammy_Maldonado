@@ -1,0 +1,497 @@
+paths:
+  /api/carts:
+    get:
+      summary: Devuelve los carritos registrados hasta el momento
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Los carritos se obtienen correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Cart'
+        "500":
+          description: Error interno, en este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros de búsqueda
+    post:
+      summary: Crea un nuevo carrito
+      tags:
+        - Carts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/CreateCart'
+      responses:
+        "200":
+          description: El carrito se ha creado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/CreatedCart'
+        "400":
+          description: Datos incompletos, verificar que los datos se estén enviando correctamente en el cuerpo
+        "500":
+          description: Error interno. En este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros en el cuerpo
+  /api/carts/{cId}:
+    get:
+      summary: Obtiene el carrito del id proporcionado
+      tags:
+        - Carts
+      parameters:
+      - name: cId
+        in: path
+        required: true
+        description: id para obtener el carrito
+        schema:
+          type: string
+      responses:
+        "200":
+          description: El carrito se ha cargado con exito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Cart'
+        "404":
+          description: Carrito no encontrado, corroborar que la id se encuentre registrada en la base de datos
+        "500":
+          description: Error interno. En este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros de búsqueda
+    put:
+      summary: Añade varios productos en el carrito del id proporcionado
+      tags:
+        - Carts
+      parameters:
+      - name: cId
+        in: path
+        required: true
+        description: id referente al carrito. Necesaria para actualizar sus productos
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/UpdateCartProducts'
+      responses:
+        "200":
+          description: Los productos se agregaron correctamente al carrito indicado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/UpdatedCartProducts'
+        "404":
+          description: Datos incompletos, corroborar cuerpo
+        "500":
+          description: Error interno del servidor, revisar conexión o parámetros en el cuerpo de la petición
+    delete: 
+      summary: Elimina todos los productos del carrito indicado
+      tags:
+        - Carts
+      parameters:
+      - name: cId
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Los productos fueron eliminados correctamente del carrito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/DeletedProductsFromCart'
+        "404":
+          description: Carrito no encontrado, corroborar que la id se encuentre registrada en la base de datos
+        "500":
+          description: Error interno. En este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros de búsqueda
+  /api/carts/{cId}/product/{pId}:
+    post:
+      summary: Agrega una cantidad de un producto en el carrito indicado
+      tags:
+        - Carts
+      parameters:
+      - name: cId
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          type: string
+      - name: pId
+        in: path
+        required: true
+        description: id del producto al cual se le va a modificar su cantidad
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/UpdateQuantity'
+      responses:
+        "200":
+          description: El producto se ha agregado correctamente al carrito indicado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/UpdatedQuantity'
+        "404":
+          description: Datos incompletos, corroborar cuerpo
+        "500":
+          description: Error interno. En este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros de búsqueda
+    put:
+      summary: Actualiza la cantidad de un producto en el carrito indicado
+      tags:
+        - Carts
+      parameters:
+      - name: cId
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          type: string
+      - name: pId
+        in: path
+        required: true
+        description: id del producto al cual se le va a modificar su cantidad
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/UpdateQuantity'
+      responses:
+        "200":
+          description: El carrito fue actualizado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/UpdatedQuantity'
+        "404":
+          description: Datos incompletos, corroborar cuerpo
+        "500":
+          description: Error interno del servidor, revisar conexión o parámetros en el cuerpo de la petición
+    delete:
+      summary: Elimina el producto indicado del carrito indicado
+      tags:
+        - Carts
+      parameters:
+      - name: cId
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          type: string
+      - name: pId
+        in: path
+        required: true
+        description: id del producto para eliminarlo del carrito
+        schema:
+          type: string
+      responses:
+        "200":
+          description: El producto fue eliminado correctamente del carrito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/DeletedProductsFromCart'
+        "404":
+          description: Carrito o producto no encontrado, corroborar parámetros de búsqueda
+        "500":
+          description: Error interno. En este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros de búsqueda
+  /api/carts/{cId}/purchase:
+    post:
+      summary: Realiza la compra del carrito indicado, si existe stock de los productos indicados
+      tags:
+        - Carts
+      parameters:
+      - name: cId
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          type: string
+      responses:
+        "200":
+          description: La compra se ha realizado con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/PurchasedCart'
+        "404":
+          description: Carrito no encontrado, corroborar que la id se encuentre registrada en la base de datos
+        "500":
+          description: Error interno. En este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros de búsqueda
+
+# Los components son todos los elementos referenciables dentro del mismo archivo
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado por Mongo
+        name:
+          type: string
+          description: Nombre del carrito
+        email:
+          type: string
+          description: Correo del dueño del carrito
+        products:
+          type: array
+          description: Productos dentro del carrito
+        created_at:
+          type: string
+          description: timestamp de creación del carrito
+        updated_at:
+          type: string
+          description: timestamp de actualización del carrito
+      example:
+        _id: ObjectId("64b920b1af9decf588747888")
+        name: "Carrito de prueba"
+        email: "prueba@correo.com"
+        products: [
+          {
+            product: {
+              _id: "646e90720ca1847250305276",
+              title: "Curso SQL",
+              description: "Aprende base de datos relacionales para tu proyecto",
+              price: 200,
+              code: "10",
+              stock: 9,
+              category: "Avanzado",
+              owner: "correo@correo.com",
+              thumbnails: [],
+              created_at: "2023-05-24T22:32:18.339Z",
+              updated_at: "2023-07-20T12:11:34.798Z"
+            },
+            quantity: 1,
+            _id: 64d849d3c5674f6a12dea0f2
+          },
+        ]
+        created_at: "2023-05-24T22:33:40.897Z"
+        updated_at: "2023-05-24T22:33:40.897Z"
+    CreatedCart:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del carrito
+        email:
+          type: string
+          description: Correo del dueño del carrito
+        _id:
+          type: string
+          description: Id autogenerado por Mongo
+        products:
+          type: array
+          description: Productos dentro del carrito
+        created_at:
+          type: string
+          description: timestamp de creación del carrito
+        updated_at:
+          type: string
+          description: timestamp de actualización del carrito
+      example:
+        name: "Carrito de prueba"
+        email: "prueba@correo.com"
+        _id: ObjectId("64b920b1af9decf588747888")
+        products: []
+        created_at: "2023-05-24T22:33:40.897Z"
+        updated_at: "2023-05-24T22:33:40.897Z"
+    UpdatedCartProducts:
+      type: object
+      properties:
+        product:
+          type: array
+          description: Productos del carrito
+        quantity:
+          type: number
+          description: Cantidad del producto en el carrito
+      example:
+        _id: "64d84b37c5674f6a12dea15f"
+        name: "Carrito genial"
+        email: "correo@correo.com"
+        products: [
+          {
+            product: "646a829cbd9bf198a28d3497",
+            quantity: 10,
+          },
+          {
+            product: "646e8f7b85a91a2c1ce20459",
+            quantity: 15,
+          },
+          {
+            product: "646e8fb2e48a422bc4a4d9c3",
+            quantity: 20,
+          }
+        ]
+        created_at: "2023-08-13T03:17:11.825Z"
+        updated_at: "2023-08-18T23:28:40.876Z"
+    DeletedProductsFromCart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado por Mongo
+        name:
+          type: string
+          description: Nombre del carrito
+        email:
+          type: string
+          description: Correo del dueño del carrito
+        products:
+          type: array
+          description: Productos dentro del carrito
+        created_at:
+          type: string
+          description: timestamp de creación del carrito
+        updated_at:
+          type: string
+          description: timestamp de actualización del carrito
+      example:
+        _id: ObjectId("64b920b1af9decf588747888")
+        name: "Carrito de prueba"
+        email: "prueba@correo.com"
+        products: []
+        created_at: "2023-05-24T22:33:40.897Z"
+        updated_at: "2023-05-24T22:33:40.897Z"
+    UpdatedQuantity:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado por Mongo
+        name:
+          type: string
+          description: Nombre del carrito
+        email:
+          type: string
+          description: Correo del dueño del carrito
+        products:
+          type: array
+          description: Productos dentro del carrito
+        created_at:
+          type: string
+          description: timestamp de creación del carrito
+        updated_at:
+          type: string
+          description: timestamp de actualización del carrito
+      example:
+        _id: "64d84b37c5674f6a12dea15f"
+        name: "Carrito genial"
+        email: "correo@correo.com"
+        products: [
+          {
+            product: "646a829cbd9bf198a28d3497",
+            quantity: 18,
+          }
+        ]
+        created_at: "2023-08-13T03:17:11.825Z"
+        updated_at: "2023-08-18T23:28:40.876Z"
+    PurchasedCart:
+      type: object
+      properties:
+        ticket:
+          type: object
+          description: Ticket de compra
+        code:
+          type: string
+          description: Código del ticket de compra
+        purchase_datetime:
+          type: string
+          description: Hora a la que se hizo la compra
+        amount:
+          type: number
+          description: Precio total de la compra
+        purchaser:
+          type: string
+          description: Correo del usuario que realizó la compra
+        _id:
+          type: string
+          description: Id de la compra autogenerado por Mongo
+        created_at:
+          type: string
+          description: timestamp de creación de la compra
+        updated_at:
+          type: string
+          description: timestamp de actualización de la compra
+      example:
+        ticket: {
+          code: "43587960",
+          purchase_datetime: "2023-08-19T01:31:00.553Z",
+          amount: 1000,
+          purchaser: "correo@correoso.com",
+          _id: "64e01b5464b691579b768e6b",
+          created_at: "2023-08-19T01:31:00.554Z",
+          updated_at: "2023-08-19T01:31:00.554Z"
+        }
+  requestBodies:
+    CreateCart:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del carrito
+        email:
+          type: string
+          description: Correo del dueño del carrito
+      example:
+        name: "Carrito de prueba cool"
+        email: "correo@correoso.com"
+    UpdateCartProducts:
+      type: object
+      properties:
+        product:
+          type: array
+          description: Productos del carrito
+        quantity:
+          type: number
+          description: Cantidad del producto en el carrito
+      example:
+        products: [
+          {
+            product: "646a829cbd9bf198a28d3497",
+            quantity: 10,
+          },
+          {
+            product: "646e8f7b85a91a2c1ce20459",
+            quantity: 15,
+          },
+          {
+            product: "646e8fb2e48a422bc4a4d9c3",
+            quantity: 20,
+          },
+        ]
+    UpdateQuantity:
+      type: object
+      properties:
+        quantity:
+          type: number
+          description: cantidad de ese producto en el carrito
+      example:
+        quantity: 18

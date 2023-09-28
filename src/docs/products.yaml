@@ -1,0 +1,240 @@
+paths:
+  /api/products:
+    get:
+      summary: Devuelve los productos registrados hasta el momento
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos se obtienen correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno, en este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros de búsqueda
+    post:
+      summary: Crea un nuevo producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/CreateProduct'
+      responses:
+        "200":
+          description: El producto se ha agregado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "400":
+          description: Datos incompletos, verificar que los datos se estén enviando correctamente en el cuerpo
+        "500":
+          description: Error interno. En este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros de búsqueda
+  /api/products/{pId}:
+    get:
+      summary: Obtiene el producto del id proporcionado
+      tags:
+        - Products
+      parameters:
+      - name: pId
+        in: path
+        required: true
+        description: id para obtener el producto
+        schema:
+          type: string
+      responses:
+        "200":
+          description: El producto fue encontrado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "404":
+          description: Producto no encontrado, corroborar que la id se encuentre registrada en la base de datos
+        "500":
+          description: Error interno. En este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros de búsqueda
+    put:
+      summary: Actualiza el producto del id proporcionado
+      tags:
+        - Products
+      parameters:
+      - name: pId
+        in: path
+        required: true
+        description: id para actualizar el producto
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/UpdateProduct'
+      responses:
+        "200":
+          description: El producto fue actualizado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "404":
+          description: Datos incompletos, corroborar cuerpo
+        "500":
+          description: Error interno del servidor, revisar conexión o parámetros en el cuerpo de la petición
+    delete: 
+      summary: Elimina el producto del id proporcionado
+      tags:
+        - Products
+      parameters:
+      - name: pId
+        in: path
+        required: true
+        description: id para eliminar el producto
+        schema:
+          type: string
+      responses:
+        "200":
+          description: El producto fue eliminado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "404":
+          description: Producto no encontrado, corroborar que la id se encuentre registrada en la base de datos
+        "500":
+          description: Error interno. En este endpoint se deberá a un error en la base de datos, revisar conexión o parámetros de búsqueda
+
+# Los components son todos los elementos referenciables dentro del mismo archivo
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado por Mongo
+        title:
+          type: string
+          description: Titulo del producto
+        description:
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        code:
+          type: string
+          description: Código producto (único)
+        stock:
+          type: number
+          description: Stock del producto
+        category:
+          type: string
+          description: Categoria del producto
+        owner:
+          type: string
+          description: Correo del usuario que creó el producto
+        thumbnails:
+          type: array
+          description: imagen del producto
+        created_at:
+          type: string
+          description: timestamp de creación del producto
+        updated_at:
+          type: string
+          description: timestamp de actualización del producto
+        id:
+          type: string
+          description: id propia del producto
+      example:
+        _id: ObjectId("646e90c42af4fe225d11941b")
+        title: "Curso Ciberseguridad"
+        description: "Aprende a Hackear y a proteger tus datos"
+        price: 200
+        code: "11"
+        stock: 10
+        category: "Avanzado"
+        owner: "correo@correoso.com"
+        thumbnails: []
+        created_at: "2023-05-24T22:33:40.897Z"
+        updated_at: "2023-05-24T22:33:40.897Z"
+        id: "646e90c42af4fe225d11941b"
+  requestBodies:
+    CreateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        code:
+          type: string
+          description: Código del producto
+        stock:
+          type: number
+          description: Stock del producto
+        category:
+          type: string
+          description: Categoria del producto
+        thumbnails:
+          type: array
+          description: Imagen del producto
+      example:
+        title: "Curso Java avanzado"
+        description: "Incursiona en el mundo del Backend"
+        price: 500
+        code: "20"
+        stock: 10
+        category: "Avanzado"
+        thumbnails: []
+    UpdateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        price:
+          type: number
+          description: Precio del producto
+        code:
+          type: string
+          description: Código del producto
+        stock:
+          type: number
+          description: Stock del producto
+        category:
+          type: string
+          description: Categoria del producto
+        thumbnails:
+          type: array
+          description: Imagen del producto
+      example:
+        title: "Curso de Diseño para principiantes"
+        description: "Aprende las bases del diseño"
+        price: 300
+        code: "52"
+        stock: 10
+        category: "Basico"
+        thumbnails: []

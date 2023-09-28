@@ -1,0 +1,23 @@
+<div>
+  <h1 style="color:red; text-align:center;">¡Gracias por su compra!</h1>
+  <br/>
+  <div style="text-align: center;">
+    <img src="cid:hello-world" alt="">
+  </div>
+  <h2>¡Hola {{data.name}}! gracias por comprar en nuestra página</h2>
+  <p>Lo agradecemos enormemente!, a continuacion vera los detalles de su compra:</p>
+  <ul>
+    <li>
+        Código de seguimiento: {{data.code}}
+    </li>
+    <li>
+        Fecha de compra: {{data.purchase_datetime}}
+    </li>
+    <li>
+        Total: {{data.amount}}
+    </li>
+    <li>
+        Usuario: {{data.purchaser}}
+    </li>
+  </ul>
+</div>
