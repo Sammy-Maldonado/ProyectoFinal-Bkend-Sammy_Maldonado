@@ -64,7 +64,7 @@ const githubLoginWithToken = (req, res) => {
 
 const logout = async (req, res) => {
   // Borra la cookie en la respuesta
-  await res.clearCookie(config.jwt.COOKIE, { path: '/', domain: config.react.BASEURL, httpOnly: true });
+  await res.clearCookie(config.jwt.COOKIE, { path: '/', domain: 'programa-t.netlify.app' });
 
   const user = req.user;
   // Actualizando la propiedad "last_connection" con la fecha y hora actual cuando el user se loguea.
