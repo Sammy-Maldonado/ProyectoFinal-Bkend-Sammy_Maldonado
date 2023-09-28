@@ -63,15 +63,16 @@ const githubLoginWithToken = (req, res) => {
 }
 
 const logout = async (req, res) => {
-  // Establece manualmente la cookie con fecha de expiración en el pasado
-  res.cookie('authToken', '', { expires: new Date(0) });
+  // Borra la cookie en la respuesta
+  await res.clearCookie(config.jwt.COOKIE);
+  /* res.cookie('authToken', '', { expires: new Date(0) }); */
 
   const user = req.user;
-  // Actualizando la propiedad "last_connection" con la fecha y hora actual cuando el usuario se desconecta.
+  // Actualizando la propiedad "last_connection" con la fecha y hora actual cuando el user se loguea.
   user.last_connection = moment().tz('America/Santiago').format('DD/MM/YYYY[, a las] HH:mm:ss [GMT]ZZ');
 
-  // Actualiza al usuario en la base de datos
-  const newUser = await usersService.updateUser(user.id, user);
+  //Actualizo al usuario en la base de datos
+  const newUser = await usersService.updateUser(user.id, user)
 
   // Envía una respuesta JSON que indica el logout exitoso
   res.sendSuccess("Logged Out");
