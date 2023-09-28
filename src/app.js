@@ -21,6 +21,7 @@ import __dirname from './utils.js';
 
 const app = express();
 //Defino que front puede entrar a mi servidor mediante CORS
+/* const testUrl = "http://localhost:5173" */
 app.use(cors({
   origin: config.react.BASEURL,
   credentials: true
