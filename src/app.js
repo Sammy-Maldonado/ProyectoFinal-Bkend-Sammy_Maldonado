@@ -22,7 +22,7 @@ import __dirname from './utils.js';
 const app = express();
 //Defino que front puede entrar a mi servidor mediante CORS
 app.use(cors({
-  origin: '*',
+  origin: config.react.BASEURL,
   credentials: true
 }));
 const PORT = config.app.PORT || 8080;
