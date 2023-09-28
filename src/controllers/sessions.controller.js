@@ -7,10 +7,6 @@ import config from '../config/config.js';
 import jwt from 'jsonwebtoken';
 import moment from "moment-timezone";
 
-const getCurrent = (req, res) => {
-  const currentUser = req.user;
-  res.sendSuccessWithPayload(currentUser);
-}
 
 const register = async (req, res) => {
   const mailingService = new MailingService();
@@ -77,6 +73,8 @@ const logout = async (req, res) => {
   res.sendSuccess("Logged Out");
 }
 
+
+
 const restoreRequest = async (req, res) => {
   const { email } = req.body;
   if (!email) return res.sendBadRequest('No se proporcionó un email');
@@ -111,14 +109,18 @@ const restorePassword = async (req, res) => {
   }
 };
 
+const getCurrent = (req, res) => {
+  const currentUser = req.user;
+  res.sendSuccessWithPayload(currentUser);
+}
 
 export default {
-  getCurrent,
   register,
   loginWithToken,
   githubInit,
   githubLoginWithToken,
   logout,
   restoreRequest,
-  restorePassword
+  restorePassword,
+  getCurrent
 }
