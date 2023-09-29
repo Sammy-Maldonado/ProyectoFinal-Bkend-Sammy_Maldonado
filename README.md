@@ -6,6 +6,8 @@ Este proyecto fue creado co NodeJS v18.15.0 y express v4.18.2.
 
 Para la correcta ejecución de esta aplicación, se recomienda desactivar cualquier tipo de antivirus durante todo el proceso, ya que al momento de enviar correos electronicos, puede que la app sea bloqueada por este, entorpeciendo la experiencia de compra del usuario.
 
+Hay un pequeño detalle en el logout en el cual intentamos dilucidar con el profesor la razón de porqué cuando se intenta desloguear al usuario en el proyecto deployado este hace el proceso de deslogueo pero posteriormente se recupera la cookie cuando se redirecciona a home. Lo revisamos detenidamente e incluso cambie la estrategia de peticiones de mi frontend de fetch a axios, logrando el mismo resultado. Este detalle solo ocurre cuando el proyecto esta deployado y no ocurre cuando se ejecuta la app de manera local,  Concluimos que puede ser algo externo referente a render, por lo cual, la única forma de desloguear al usuario de momento es eliminando la cookie de manera manual.
+
 ## Descripción
 
 "Programa-T" es una plataforma de comercio electrónico que permite a los usuarios comprar y promocionar cursos en línea. Este repositorio contiene el código fuente del backend de la aplicación, que gestiona la lógica de negocio, la base de datos y la comunicación con el frontend.
