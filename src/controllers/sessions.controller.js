@@ -61,7 +61,6 @@ const githubLoginWithToken = (req, res) => {
 const logout = async (req, res) => {
   // Borra la cookie en la respuesta
   res.clearCookie(config.jwt.COOKIE,{
-    domain:'https://programa-t.netlify.app/',
     path:'/'
   });
 
