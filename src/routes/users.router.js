@@ -5,7 +5,7 @@ import uploader from "../services/uploader.js";
 
 const router = Router();
 
-router.get('/', usersController.getUsers);
+router.get('/', passportCall('jwt', { strategyType: 'jwt', sessions: false }), authRoles('admin'), usersController.getUsers);
 router.post('/', usersController.addUsers)
 router.get('/:uId', usersController.getUserById);
 router.put('/:uId', usersController.updateUser);

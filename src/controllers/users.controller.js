@@ -82,7 +82,7 @@ const changeUserRole = async (req, res) => {
       return res.status(200).send({ status: 'success', message: 'Rol de usuario actualizado con éxito', payload: newUserRole });
     }
   
-    // Verificando si los documentos han sido cargados
+/*     // Verificando si los documentos han sido cargados
     if (!user.documents || user.documents.length < 3) {
       return res.status(400).send({ status: 'error', error: 'El usuario no ha cargado los 3 documentos requeridos' });
     }
@@ -95,7 +95,7 @@ const changeUserRole = async (req, res) => {
   
     if (missingDocuments.length > 0) {
       return res.status(400).send({ status: 'error', error: `Faltan los siguientes documentos: ${missingDocuments.join(', ')}` });
-    }
+    } */
   
     // Cambiando el rol del usuario después que se entregan los documentos necesarios
     user.role = 'premium';
