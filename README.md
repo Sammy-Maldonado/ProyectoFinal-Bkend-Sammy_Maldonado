@@ -8,6 +8,10 @@ Para la correcta ejecución de esta aplicación, se recomienda desactivar cualqu
 
 Hay un pequeño detalle en el logout en el cual intentamos dilucidar con el profesor la razón de porqué cuando se intenta desloguear al usuario en el proyecto deployado este hace el proceso de deslogueo pero posteriormente se recupera la cookie cuando se redirecciona a home. Lo revisamos detenidamente e incluso cambie la estrategia de peticiones de mi frontend de fetch a axios, logrando el mismo resultado. Este detalle solo ocurre cuando el proyecto esta deployado y no ocurre cuando se ejecuta la app de manera local,  Concluimos que puede ser algo externo referente a render, por lo cual, la única forma de desloguear al usuario de momento es eliminando la cookie de manera manual.
 
+## Credenciales de admin
+email: admin@admin.com
+pwd: admin123
+
 ## Descripción
 
 "Programa-T" es una plataforma de comercio electrónico que permite a los usuarios comprar y promocionar cursos en línea. Este repositorio contiene el código fuente del backend de la aplicación, que gestiona la lógica de negocio, la base de datos y la comunicación con el frontend.
