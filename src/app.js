@@ -21,9 +21,9 @@ import __dirname from './utils.js';
 
 const app = express();
 //Defino que front puede entrar a mi servidor mediante CORS
-const allowedOrigins = [config.react.TESTURL, config.react.BASEURL, config.react.RENDERBASEURL]
+/* const testUrl = "http://localhost:5173" */
 app.use(cors({
-  origin: allowedOrigins,
+  origin: config.react.BASEURL,
   credentials: true
 }));
 const PORT = config.app.PORT || 8080;
